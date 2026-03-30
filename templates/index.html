@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarPulse | Умни известия за обяви на коли</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="#hero">CarPulse</a>
+      <nav class="actions">
+        <a href="#pricing" class="btn btn-ghost">Вход</a>
+        <a href="#pricing" class="btn btn-primary">Premium</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="hero section">
+        <div class="hero-content">
+          <span class="eyebrow">Следи новите обяви автоматично</span>
+          <h1>Намирай точната кола по твои критерии и получавай имейл всеки ден</h1>
+          <p>
+            Избираш марка, модел, години, бюджет и предпочитан час. Ние ти изпращаме
+            всички нови обяви, които отговарят на филтъра ти.
+          </p>
+          <a href="#filter-form" class="btn btn-primary btn-large">Започни безплатно</a>
+        </div>
+        <div class="hero-card">
+          <h2>Примерен филтър</h2>
+          <ul>
+            <li><strong>Марка:</strong> Audi</li>
+            <li><strong>Модел:</strong> A4</li>
+            <li><strong>Година:</strong> 2013 - 2015</li>
+            <li><strong>Цена:</strong> до 12 000 EUR</li>
+            <li><strong>Имейл:</strong> всеки ден в 08:00</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="filter-form" class="section">
+        <div class="section-heading">
+          <h2>Настрой своя филтър за обяви</h2>
+          <p>
+            Попълни полетата по-долу. Това са данните, които приложението ще изпрати към
+            твоя Flask/Python backend.
+          </p>
+        </div>
+
+        <form class="filter-grid" action="#" method="post">
+          <div class="brand-model-row full-span">
+            <label>
+              Марка <span class="required-star">*</span>
+              <select id="brand-select" name="brand" required>
+                <option value="">Избери марка</option>
+                {% for brand in brands %}
+                  <option value="{{ brand }}">{{ brand }}</option>
+                {% endfor %}
+              </select>
+              <span class="required-note">Задължително поле</span>
+            </label>
+
+            <label>
+              Модел <span class="required-star">*</span>
+              <select id="model-select" name="model" required disabled>
+                <option value="">Първо избери марка</option>
+              </select>
+              <span class="required-note">Задължително поле</span>
+            </label>
+          </div>
+
+          <label>
+            Купе
+            <select name="coupe">
+              <option value="">Без значение</option>
+              <option>Седан</option>
+              <option>Хечбек</option>
+              <option>Комби</option>
+              <option>Купе</option>
+              <option>Кабрио</option>
+              <option>Джип</option>
+              <option>Пикап</option>
+              <option>Ван</option>
+            </select>
+          </label>
+
+          <div class="form-block">
+            <p class="group-title">Гориво</p>
+            <div class="chip-group">
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="" checked />
+                <span class="chip">Без значение</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="petrol" />
+                <span class="chip">Бензин</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="diesel" />
+                <span class="chip">Дизел</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="lpg_petrol" />
+                <span class="chip">Газ/Бензин</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="cng_petrol" />
+                <span class="chip">Метан/Бензин</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="hybrid" />
+                <span class="chip">Хибрид</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="fuel" value="electric" />
+                <span class="chip">Електричество</span>
+              </label>
+            </div>
+          </div>
+
+          <label>
+            Скорости
+            <select name="gears">
+              <option value="">Без значение</option>
+              <option>Ръчни</option>
+              <option>Автоматични</option>
+            </select>
+          </label>
+
+          <label>
+            Продавач
+            <select name="seller">
+              <option value="">Без значение</option>
+              <option>Частни лица</option>
+              <option>Автокъщъ/Търговци</option>
+              <option>Официални вносители</option>
+            </select>
+          </label>
+
+          <label>
+            Цвят
+            <select name="color">
+              <option value="">Без значение</option>
+              <option>Без значение</option>
+              <option>Бежов</option>
+              <option>Бордо</option>
+              <option>Бронзов</option>
+              <option>Бял</option>
+              <option>Виолетов</option>
+              <option>Жълт</option>
+              <option>Зелен</option>
+              <option>Златен</option>
+              <option>Кафяв</option>
+              <option>Оранжев</option>
+              <option>Сив</option>
+              <option>Син</option>
+              <option>Сребърен</option>
+              <option>Червен</option>
+              <option>Черен</option>
+              <option>Лилав</option>
+              <option>Охра</option>
+              <option>Перла</option>
+              <option>Розов</option>
+              <option>Хамелеон</option>
+              <option>Светло зелен</option>
+              <option>Светло сив</option>
+              <option>Светло син</option>
+              <option>Тъмно зелен</option>
+              <option>Тъмно сив</option>
+              <option>Тъмно син</option>
+            </select>
+          </label>
+
+          <label>
+            Брой врати
+            <select name="doors_count">
+              <option value="">Без значение</option>
+              <option>2/3</option>
+              <option>4/5</option>
+            </select>
+          </label>
+
+          <label class="full-span">
+            Локация
+            <select name="location">
+              <option value="">Всички</option>
+              <option>София</option>
+              <option>Варна</option>
+              <option>Пловдив</option>
+              <option>Враца</option>
+              <option>Бургас</option>
+              <option>Дупница</option>
+              <option>Стара Загора</option>
+              <option>Монтана</option>
+              <option>Шумен</option>
+              <option>Хасково</option>
+              <option>Плевен</option>
+              <option>Сливен</option>
+              <option>Русе</option>
+              <option>Велико Търново</option>
+              <option>Добрич</option>
+              <option>Пазарджик</option>
+              <option>Перник</option>
+              <option>Казанлък</option>
+              <option>Габрово</option>
+              <option>Благоевград</option>
+              <option>Кюстендил</option>
+              <option>Силистра</option>
+              <option>Кърджали</option>
+              <option>Разград</option>
+              <option>Димитровград</option>
+              <option>Троян</option>
+              <option>Петрич</option>
+              <option>Видин</option>
+              <option>Ямбол</option>
+              <option>Търговище</option>
+              <option>Асеновград</option>
+              <option>Гоце Делчев</option>
+              <option>Лясковец</option>
+              <option>Карлово</option>
+              <option>Провадия</option>
+              <option>Панагюрище</option>
+              <option>Септември</option>
+              <option>Горна Оряховица</option>
+              <option>Айтос</option>
+              <option>Смолян</option>
+              <option>Свищов</option>
+              <option>Луковит</option>
+              <option>Ловеч</option>
+              <option>Харманли</option>
+              <option>Левски</option>
+              <option>Нови пазар</option>
+              <option>Кирилово</option>
+              <option>Велинград</option>
+              <option>Своге</option>
+              <option>Берковица</option>
+            </select>
+          </label>
+
+          <details class="accordion options-accordion full-span">
+            <summary class="accordion-summary">Екстри</summary>
+            <div class="accordion-body">
+              <div class="form-block full-span">
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="climate_control" />
+                <span>Климатик</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="climatronic" />
+                <span>Климатроник</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="leather_seats" />
+                <span>Кожен салон</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="electric_windows" />
+                <span>Ел.стъкла</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="electric_mirrors" />
+                <span>Ел.огледала</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="heated_seats" />
+                <span>Ел.седалки</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="seat_heating" />
+                <span>Подгряване на седалки</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="sunroof" />
+                <span>Шибедах</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="stereo_system" />
+                <span>Стерео уредба</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="alloy_wheels" />
+                <span>Алуминиеви джанти</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="dvd_tv" />
+                <span>DVD/TV</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="multifunction_steering" />
+                <span>Мултифункционален волан</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="4x4" />
+                <span>4x4</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="abs" />
+                <span>ABS</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="esp" />
+                <span>ESP</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="airbag" />
+                <span>Airbag</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="xenon_lights" />
+                <span>Ксенонови фарове</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="halogen_lights" />
+                <span>Халогенни фарове</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="traction_control" />
+                <span>ASR/Тракшън контрол</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="parking_sensors" />
+                <span>Парктроник</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="alarm" />
+                <span>Аларма</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="immobilizer" />
+                <span>Имобилайзер</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="central_locking" />
+                <span>Центр. заключване</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="insurance" />
+                <span>Застраховка</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="armored" />
+                <span>Брониран</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="start_stop" />
+                <span>Старт-Стоп система</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="keyless_start" />
+                <span>Безключово палене</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="tiptronic" />
+                <span>Типтроник/Мултитроник</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="autopilot" />
+                <span>Автопилот</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="power_steering" />
+                <span>Серво управление</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="trip_computer" />
+                <span>Бордови компютър</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="service_book" />
+                <span>Сервизна книжка</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="warranty" />
+                <span>Гаранция</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="navigation" />
+                <span>Навигационна система</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="right_hand_drive" />
+                <span>Десен волан</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="tuning" />
+                <span>Тунинг</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="panoramic_roof" />
+                <span>Панорамен покрив</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="taxi" />
+                <span>TAXI</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="retro" />
+                <span>Ретро</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="cargo" />
+                <span>Теглич</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="7_seats" />
+                <span>7 места (6+1)</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="air_conditioning" />
+                <span>Хладилен</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="barter" />
+                <span>Възможност за бартер</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="leasing" />
+                <span>Възможност за лизинг</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="tax_credit" />
+                <span>Право на данъчен кредит</span>
+              </label>
+
+              <label class="radio-card">
+                <input type="checkbox" name="features[]" value="new_import" />
+                <span>Нов внос</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-block full-span">
+            <p class="group-title">Волан</p>
+            <div class="chip-group">
+              <label class="chip-option">
+                <input type="radio" name="steering_wheel" value="" checked />
+                <span class="chip">Без значение</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="steering_wheel" value="left" />
+                <span class="chip">Ляв</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="steering_wheel" value="right" />
+                <span class="chip">Десен</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-block full-span">
+            <p class="group-title">Състояние</p>
+            <div class="chip-group">
+              <label class="chip-option">
+                <input type="checkbox" name="condition[]" value="new" />
+                <span class="chip">Нов</span>
+              </label>
+              <label class="chip-option">
+                <input type="checkbox" name="condition[]" value="used" />
+                <span class="chip">Употребяван</span>
+              </label>
+              <label class="chip-option">
+                <input type="checkbox" name="condition[]" value="for_parts" />
+                <span class="chip">За части</span>
+              </label>
+            </div>
+            <span class="hint">Ако не избереш нищо → всички</span>
+          </div>
+
+          </div>
+          </details>
+
+          <div class="form-block full-span">
+            <p class="group-title">Цена (EUR)</p>
+            <div class="range-grid">
+              <label>
+                От
+                <input type="number" name="price_from" min="0" max="50000" placeholder="0" />
+              </label>
+              <label>
+                До
+                <input type="number" name="price_to" min="0" max="50000" placeholder="50000+" />
+              </label>
+            </div>
+          </div>
+
+          <div class="form-block full-span">
+            <p class="group-title">Година</p>
+            <div class="range-grid">
+              <label>
+                От
+                <input type="number" name="year_from" min="1990" max="2026" placeholder="1990" />
+              </label>
+              <label>
+                До
+                <input type="number" name="year_to" min="1990" max="2026" placeholder="2026" />
+              </label>
+            </div>
+          </div>
+
+          <div class="form-block full-span">
+            <p class="group-title">Horse power (HP)</p>
+            <div class="range-grid">
+              <label>
+                От
+                <input type="number" name="horse_power_from" min="0" max="400" placeholder="0" />
+              </label>
+              <label>
+                До
+                <input type="number" name="horse_power_to" min="0" max="400" placeholder="400+" />
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-large full-width">
+            Запази филтъра
+          </button>
+        </form>
+      </section>
+
+      <section id="pricing" class="section">
+        <div class="section-heading">
+          <h2>Планове</h2>
+          <p>Избери между безплатен и premium достъп.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="plan">
+            <h3>Безплатен</h3>
+            <p class="price">0 EUR / месец</p>
+            <ul>
+              <li>1 активен филтър</li>
+              <li>Дневен имейл в избран час</li>
+              <li>Базови филтри (марка, модел, година, цена)</li>
+            </ul>
+            <button class="btn btn-ghost full-width">Използвай безплатно</button>
+          </article>
+
+          <article class="plan plan-premium">
+            <span class="badge">Най-популярен</span>
+            <h3>Premium</h3>
+            <p class="price">19.99 EUR / месец</p>
+            <ul>
+              <li>Неограничени филтри</li>
+              <li>Експорт в Excel (.xlsx) <strong>NEW</strong></li>
+              <li>SMS/Viber известия при нова обява</li>
+              <li>Приоритетни известия на всеки 2 часа</li>
+              <li>История и статистика на цените</li>
+            </ul>
+            <button class="btn btn-primary full-width">Стани Premium</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section export-section">
+        <div>
+          <h2>Експорт на резултати</h2>
+          <p>
+            Изтегли всички намерени обяви като Excel таблица за по-лесен анализ и
+            сравнение.
+          </p>
+        </div>
+        <div class="export-actions">
+          <button class="btn btn-disabled" type="button" disabled>
+            Експорт в Excel (Premium)
+          </button>
+          <button class="btn btn-outline" type="button">Виж демо файл</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>CarPulse © 2026 | Смарт следене на автомобилни обяви</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
