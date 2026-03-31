@@ -1,19 +1,19 @@
 const form = document.querySelector(".filter-grid");
 const demoButton = document.querySelector(".btn-outline");
 
-if (form) {
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-    const selectedData = Object.fromEntries(formData.entries());
-    selectedData.only_new_listings = formData.get("only_new_listings") ? "yes" : "no";
-
-    // Placeholder for Flask integration: send selected filters to backend endpoint.
-    console.log("Избрани критерии:", selectedData);
-    alert("Филтърът е записан. Свържи формата към Flask endpoint за реално запазване.");
-  });
-}
+//if (form) {
+//  form.addEventListener("submit", (event) => {
+//    event.preventDefault();
+//
+//    const formData = new FormData(form);
+//    const selectedData = Object.fromEntries(formData.entries());
+//    selectedData.only_new_listings = formData.get("only_new_listings") ? "yes" : "no";
+//
+//    // Placeholder for Flask integration: send selected filters to backend endpoint.
+//    console.log("Избрани критерии:", selectedData);
+//    alert("Филтърът е записан. Свържи формата към Flask endpoint за реално запазване.");
+//  });
+//}
 
 if (demoButton) {
   demoButton.addEventListener("click", () => {
