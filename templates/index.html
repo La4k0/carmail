@@ -35,11 +35,11 @@
         <div class="hero-card">
           <h2>Примерен филтър</h2>
           <ul>
-            <li><strong>Марка:</strong> Audi</li>
-            <li><strong>Модел:</strong> A4</li>
-            <li><strong>Година:</strong> 2013 - 2015</li>
-            <li><strong>Цена:</strong> до 12 000 EUR</li>
-            <li><strong>Имейл:</strong> всеки ден в 08:00</li>
+            <li><strong>Марка:</strong> {{ example_brand }}</li>
+            <li><strong>Модел:</strong> {{ example_model }}</li>
+            <li><strong>Година:</strong> {{ example_start_year }} - {{ example_end_year }}</li>
+            <li><strong>Цена:</strong> до {{ example_price }} EUR</li>
+            <li><strong>Имейл:</strong> всеки ден в {{example_hour}}:00</li>
           </ul>
         </div>
       </section>
@@ -53,10 +53,11 @@
           </p>
         </div>
 
-        <form class="filter-grid" action="{{ url_for('submit_filter') }}" method="post">          <div class="brand-model-row full-span">
+        <form class="filter-grid" action="{{ url_for('submit_filter') }}" method="post">
+          <div class="brand-model-row full-span">
             <label>
               Марка <span class="required-star">*</span>
-              <select id="brand-select" name="brand" required>
+              <select id="brand-select" name="Марка" required>
                 <option value="">Избери марка</option>
                 {% for brand in brands %}
                   <option value="{{ brand }}">{{ brand }}</option>
@@ -67,7 +68,7 @@
 
             <label>
               Модел <span class="required-star">*</span>
-              <select id="model-select" name="model" required disabled>
+              <select id="model-select" name="Модел" required disabled>
                 <option value="">Първо избери марка</option>
               </select>
               <span class="required-note">Задължително поле</span>
@@ -76,7 +77,7 @@
 
           <label>
             Купе
-            <select name="coupe">
+            <select name="Купе">
               <option value="">Без значение</option>
               <option>Седан</option>
               <option>Хечбек</option>
@@ -93,31 +94,31 @@
             <p class="group-title">Гориво</p>
             <div class="chip-group">
               <label class="chip-option">
-                <input type="radio" name="fuel" value="" checked />
+                <input type="radio" name="Гориво" value="" checked />
                 <span class="chip">Без значение</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="fuel" value="petrol" />
+                <input type="radio" name="Гориво" value="Бензин" />
                 <span class="chip">Бензин</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="fuel" value="diesel" />
+                <input type="radio" name="Гориво" value="Дизел" />
                 <span class="chip">Дизел</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="fuel" value="lpg_petrol" />
+                <input type="radio" name="Гориво" value="Газ/Бензин" />
                 <span class="chip">Газ/Бензин</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="fuel" value="cng_petrol" />
+                <input type="radio" name="Гориво" value="Метан/Бензин" />
                 <span class="chip">Метан/Бензин</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="fuel" value="hybrid" />
+                <input type="radio" name="Гориво" value="Хибрид" />
                 <span class="chip">Хибрид</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="fuel" value="electric" />
+                <input type="radio" name="Гориво" value="Електричество" />
                 <span class="chip">Електричество</span>
               </label>
             </div>
@@ -125,7 +126,7 @@
 
           <label>
             Скорости
-            <select name="gears">
+            <select name="Скорости">
               <option value="">Без значение</option>
               <option>Ръчни</option>
               <option>Автоматични</option>
@@ -134,7 +135,7 @@
 
           <label>
             Продавач
-            <select name="seller">
+            <select name="Продавач">
               <option value="">Без значение</option>
               <option>Частни лица</option>
               <option>Автокъщъ/Търговци</option>
@@ -144,7 +145,7 @@
 
           <label>
             Цвят
-            <select name="color">
+            <select name="Цвят">
               <option value="">Без значение</option>
               <option>Без значение</option>
               <option>Бежов</option>
@@ -178,7 +179,7 @@
 
           <label>
             Брой врати
-            <select name="doors_count">
+            <select name="Брой врати">
               <option value="">Без значение</option>
               <option>2/3</option>
               <option>4/5</option>
@@ -187,7 +188,7 @@
 
           <label class="full-span">
             Локация
-            <select name="location">
+            <select name="Локация">
               <option value="">Всички</option>
               <option>София</option>
               <option>Варна</option>
@@ -248,232 +249,232 @@
               <div class="form-block full-span">
             <div class="radio-group">
               <label class="radio-card">
-                <input type="checkbox" name="features" value="climate_control" />
+                <input type="checkbox" name="Екстри" value="Климатик" />
                 <span>Климатик</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="climatronic" />
+                <input type="checkbox" name="Екстри" value="Климатроник" />
                 <span>Климатроник</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="leather_seats" />
+                <input type="checkbox" name="Екстри" value="Кожен салон" />
                 <span>Кожен салон</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="electric_windows" />
+                <input type="checkbox" name="Екстри" value="Ел.стъкла" />
                 <span>Ел.стъкла</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="electric_mirrors" />
+                <input type="checkbox" name="Екстри" value="Ел.огледала" />
                 <span>Ел.огледала</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="heated_seats" />
+                <input type="checkbox" name="Екстри" value="Ел.седалки" />
                 <span>Ел.седалки</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="seat_heating" />
+                <input type="checkbox" name="Екстри" value="Подгряване на седалки" />
                 <span>Подгряване на седалки</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="sunroof" />
+                <input type="checkbox" name="Екстри" value="Шибедах" />
                 <span>Шибедах</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="stereo_system" />
+                <input type="checkbox" name="Екстри" value="Стерео уредба" />
                 <span>Стерео уредба</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="alloy_wheels" />
+                <input type="checkbox" name="Екстри" value="Алуминиеви джанти" />
                 <span>Алуминиеви джанти</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="dvd_tv" />
+                <input type="checkbox" name="Екстри" value="DVD/TV" />
                 <span>DVD/TV</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="multifunction_steering" />
+                <input type="checkbox" name="Екстри" value="Мултифункционален волан" />
                 <span>Мултифункционален волан</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="4x4" />
+                <input type="checkbox" name="Екстри" value="4x4" />
                 <span>4x4</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="abs" />
+                <input type="checkbox" name="Екстри" value="ABS" />
                 <span>ABS</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="esp" />
+                <input type="checkbox" name="Екстри" value="ESP" />
                 <span>ESP</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="airbag" />
+                <input type="checkbox" name="Екстри" value="Airbag" />
                 <span>Airbag</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="xenon_lights" />
+                <input type="checkbox" name="Екстри" value="Ксенонови фарове" />
                 <span>Ксенонови фарове</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="halogen_lights" />
+                <input type="checkbox" name="Екстри" value="Халогенни фарове" />
                 <span>Халогенни фарове</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="traction_control" />
+                <input type="checkbox" name="Екстри" value="ASR/Тракшън контрол" />
                 <span>ASR/Тракшън контрол</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="parking_sensors" />
+                <input type="checkbox" name="Екстри" value="Парктроник" />
                 <span>Парктроник</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="alarm" />
+                <input type="checkbox" name="Екстри" value="Аларма" />
                 <span>Аларма</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="immobilizer" />
+                <input type="checkbox" name="Екстри" value="Имобилайзер" />
                 <span>Имобилайзер</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="central_locking" />
+                <input type="checkbox" name="Екстри" value="Центр. заключване" />
                 <span>Центр. заключване</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="insurance" />
+                <input type="checkbox" name="Екстри" value="Застраховка" />
                 <span>Застраховка</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="armored" />
+                <input type="checkbox" name="Екстри" value="Брониран" />
                 <span>Брониран</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="start_stop" />
+                <input type="checkbox" name="Екстри" value="Старт-Стоп система" />
                 <span>Старт-Стоп система</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="keyless_start" />
+                <input type="checkbox" name="Екстри" value="Безключово палене" />
                 <span>Безключово палене</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="tiptronic" />
+                <input type="checkbox" name="Екстри" value="Типтроник/Мултитроник" />
                 <span>Типтроник/Мултитроник</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="autopilot" />
+                <input type="checkbox" name="Екстри" value="Автопилот" />
                 <span>Автопилот</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="power_steering" />
+                <input type="checkbox" name="Екстри" value="Серво управление" />
                 <span>Серво управление</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="trip_computer" />
+                <input type="checkbox" name="Екстри" value="Бордови компютър" />
                 <span>Бордови компютър</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="service_book" />
+                <input type="checkbox" name="Екстри" value="Сервизна книжка" />
                 <span>Сервизна книжка</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="warranty" />
+                <input type="checkbox" name="Екстри" value="Гаранция" />
                 <span>Гаранция</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="navigation" />
+                <input type="checkbox" name="Екстри" value="Навигационна система" />
                 <span>Навигационна система</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="right_hand_drive" />
+                <input type="checkbox" name="Екстри" value="Десен волан" />
                 <span>Десен волан</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="tuning" />
+                <input type="checkbox" name="Екстри" value="Тунинг" />
                 <span>Тунинг</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="panoramic_roof" />
+                <input type="checkbox" name="Екстри" value="Панорамен покрив" />
                 <span>Панорамен покрив</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="taxi" />
+                <input type="checkbox" name="Екстри" value="TAXI" />
                 <span>TAXI</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="retro" />
+                <input type="checkbox" name="Екстри" value="Ретро" />
                 <span>Ретро</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="cargo" />
+                <input type="checkbox" name="Екстри" value="Теглич" />
                 <span>Теглич</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="7_seats" />
+                <input type="checkbox" name="Екстри" value="7 места (6+1)" />
                 <span>7 места (6+1)</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="air_conditioning" />
+                <input type="checkbox" name="Екстри" value="Хладилен" />
                 <span>Хладилен</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="barter" />
+                <input type="checkbox" name="Екстри" value="Възможност за бартер" />
                 <span>Възможност за бартер</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="leasing" />
+                <input type="checkbox" name="Екстри" value="Възможност за лизинг" />
                 <span>Възможност за лизинг</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="tax_credit" />
+                <input type="checkbox" name="Екстри" value="Право на данъчен кредит" />
                 <span>Право на данъчен кредит</span>
               </label>
 
               <label class="radio-card">
-                <input type="checkbox" name="features" value="new_import" />
+                <input type="checkbox" name="Екстри" value="Нов внос" />
                 <span>Нов внос</span>
               </label>
             </div>
@@ -483,15 +484,15 @@
             <p class="group-title">Волан</p>
             <div class="chip-group">
               <label class="chip-option">
-                <input type="radio" name="steering_wheel" value="" checked />
+                <input type="radio" name="Волан" value="" checked />
                 <span class="chip">Без значение</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="steering_wheel" value="left" />
+                <input type="radio" name="Волан" value="Ляв" />
                 <span class="chip">Ляв</span>
               </label>
               <label class="chip-option">
-                <input type="radio" name="steering_wheel" value="right" />
+                <input type="radio" name="Волан" value="Десен" />
                 <span class="chip">Десен</span>
               </label>
             </div>
@@ -501,15 +502,15 @@
             <p class="group-title">Състояние</p>
             <div class="chip-group">
               <label class="chip-option">
-                <input type="checkbox" name="condition" value="new" />
+                <input type="checkbox" name="Състояние" value="Нов" />
                 <span class="chip">Нов</span>
               </label>
               <label class="chip-option">
-                <input type="checkbox" name="condition" value="used" />
+                <input type="checkbox" name="Състояние" value="Употребяван" />
                 <span class="chip">Употребяван</span>
               </label>
               <label class="chip-option">
-                <input type="checkbox" name="condition" value="for_parts" />
+                <input type="checkbox" name="Състояние" value="За части" />
                 <span class="chip">За части</span>
               </label>
             </div>
@@ -548,7 +549,7 @@
           </div>
 
           <div class="form-block full-span">
-            <p class="group-title">Horse power (HP)</p>
+            <p class="group-title">Конски сили</p>
             <div class="range-grid">
               <label>
                 От

@@ -101,6 +101,16 @@ class CarsScraper:
                         await self.wait_for_selector_and_click(self.filters["brand"], 10 * 1000)
                         return all_brands_dict
 
+    async def scrape_data(self, data):
+        await self.page.goto(self.home_page_url)
+
+        await self.wait_for_selector_and_click(self.filters["brand"], 10 * 1000)
+
+        all_brands_xpath = "//span[contains(text(),'Марка') and contains(@class,'title')]//following::label[contains(@for,'brand')]"
+
+        all_brands = self.page.locator(f"xpath={all_brands_xpath}")
+        all_brands_count = await all_brands.count()
+
 def get_brands_dict():
     return asyncio.run(_get_brands())
 
