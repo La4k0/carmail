@@ -104,12 +104,53 @@ class CarsScraper:
     async def scrape_data(self, data):
         await self.page.goto(self.home_page_url)
 
-        await self.wait_for_selector_and_click(self.filters["brand"], 10 * 1000)
+        scarping_results = {}
 
-        all_brands_xpath = "//span[contains(text(),'Марка') and contains(@class,'title')]//following::label[contains(@for,'brand')]"
+        for key, value in data.items():
+            if isinstance(value, list):
+                await self.wait_for_selector_and_click( f"//span[contains(text(),'{key}') and not(contains(@class,'chip'))]", 10 * 1000)
+                for option in value:
+                    await self.wait_for_selector_and_click(f"//label[contains(text(),'{option}')]", 10 * 1000)
+                await self.wait_for_selector_and_click( f"//span[contains(text(),'{key}') and contains(@class,'title')]//following::button[contains(.,'Потвърди')]", 10 * 1000)
+                await asyncio.sleep(3)
+            else:
+                if 'price' not in key and 'year' not in key:
+                    await self.wait_for_selector_and_click(f"//span[contains(text(),'{key}') and not(contains(@class,'chip'))]", 10 * 1000)
+                    await self.wait_for_selector_and_click(f"//label[contains(text(),'{value}')]", 10 * 1000)
+                    await self.wait_for_selector_and_click(f"//span[contains(text(),'{key}') and contains(@class,'title')]//following::button[contains(.,'Потвърди')]", 10 * 1000)
+                    await asyncio.sleep(3)
 
-        all_brands = self.page.locator(f"xpath={all_brands_xpath}")
-        all_brands_count = await all_brands.count()
+        all_listings_xpath = "//a[contains(@href,'offer')]"
+
+        all_listings = self.page.locator(f"xpath={all_listings_xpath}")
+        all_listings_count = await all_listings.count()
+
+        listing_index = 1
+
+        for listing in range(all_listings_count):
+            scarping_results[f'listing_{listing_index}'] = {}
+
+            scarping_results[f'listing_{listing_index}']['brand'] = data['Марка']
+            scarping_results[f'listing_{listing_index}']['model'] = data['Модел']
+
+            await self.page.wait_for_selector(selector=f"xpath=({all_listings_xpath})[{listing + 1}]", timeout=10 * 1000, state='attached')
+            current_listing_title_xpath = self.page.locator(f"xpath=({all_listings_xpath})[{listing + 1}]//*[contains(@class,'observable')]").first
+            current_listing_title = (await current_listing_title_xpath.text_content()).strip()
+            scarping_results[f'listing_{listing_index}']['title'] = current_listing_title
+
+            current_listing_body_xpath = self.page.locator(f"xpath=({all_listings_xpath})[{listing + 1}]//*[contains(@class,'body')]").first
+            current_listing_body = (await current_listing_body_xpath.text_content()).strip()
+            scarping_results[f'listing_{listing_index}']['year'] = (current_listing_body.split(","))[0]
+            scarping_results[f'listing_{listing_index}']['fuel'] = (current_listing_body.split(","))[1]
+            scarping_results[f'listing_{listing_index}']['range'] = (current_listing_body.split(","))[2]
+
+            current_listing_description_xpath = self.page.locator(f"xpath=({all_listings_xpath})[{listing + 1}]//*[contains(@class,'body')][last()]").first
+            current_listing_description = (await current_listing_description_xpath.text_content()).strip()
+            scarping_results[f'listing_{listing_index}']['description'] = current_listing_description
+
+            listing_index += 1
+
+        return scarping_results
 
 def get_brands_dict():
     return asyncio.run(_get_brands())
